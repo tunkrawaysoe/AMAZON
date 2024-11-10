@@ -76,21 +76,26 @@ const products = [
           <div class="product-name limit-text-to-2-lines">
            ${productItem.name}
           </div>
-
+          
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${products.rating.stars}.png">
+              src="images/ratings/rating-${productItem.rating.stars * 10}.png">
             <div class="product-rating-count link-primary">
-             ${productItem.count}
+              ${productItem.rating.count}
             </div>
           </div>
+
+
+
+
+         
 
           <div class="product-price">
             $${productItem.priceCents / 100}
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class = "js-select">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -111,7 +116,8 @@ const products = [
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart 
+          " data-product-name="${productItem.name}">
             Add to Cart
           </button>
         </div>`
@@ -119,7 +125,26 @@ const products = [
 
 
   })
-  console.log(productHtml)
+  
   document.querySelector('.js-products-grid').innerHTML=productHtml;
-  
-  
+
+  document.querySelectorAll('.js-add-to-cart').forEach((button)=>
+  {
+    
+    button.addEventListener('click',()=>
+    {  const select= Number(document.querySelector(".js-select").value);
+    
+      const productName=button.dataset.productName;
+      cart.push({
+        productName:productName,
+        quantity:select
+
+
+      })
+     
+
+
+    })
+
+
+  })
