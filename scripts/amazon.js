@@ -95,7 +95,7 @@ const products = [
           </div>
 
           <div class="product-quantity-container">
-            <select class = "js-select">
+            <select class ="js-selection" id="${productItem.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -117,34 +117,80 @@ const products = [
           </div>
 
           <button class="add-to-cart-button button-primary js-add-to-cart 
-          " data-product-name="${productItem.name}">
+          " data-product-id="${productItem.id}" data-product-name="${productItem.name}">
             Add to Cart
           </button>
         </div>`
        
 
 
-  })
-  
+  });
+
+
+
   document.querySelector('.js-products-grid').innerHTML=productHtml;
+ 
+  document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+    
+    button.addEventListener('click',()=>{
+            
+      document.querySelector('.js-products-grid').innerHTML = productHtml;
 
-  document.querySelectorAll('.js-add-to-cart').forEach((button)=>
-  {
+      document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+      
+          button.addEventListener('click', () => {
+              
+              let selectElements = document.querySelectorAll('.js-selection');
+              
+              // Process each select element one by one
+              selectElements.forEach((selectElement, index) => {
+                  
+                  // Delay the processing to handle each value one by one
+                  setTimeout(() => {
+                      let selectedValue = selectElement.options[selectElement.selectedIndex].value;
+                      let selectedText = selectElement.options[selectElement.selectedIndex].text;
+      
+                      console.log("Select Element Index: " + index);
+                      console.log("Selected Value: " + selectedValue);
+                      console.log("Selected Text: " + selectedText);
+                  }, index * 500); // 500ms delay between each element, adjust as needed
+              });
+          });
+      });
+      
     
-    button.addEventListener('click',()=>
-    {  const select= Number(document.querySelector(".js-select").value);
-    
+      
+      const productId = button.dataset.productId;
+      
       const productName=button.dataset.productName;
-      cart.push({
-        productName:productName,
-        quantity:select
+        
 
+      
+      
+      let matchingItem;
+      cart.forEach((item)=>{
+      if(productName===item.productName){
+          
+          matchingItem=item;
 
-      })
-     
+        }
+       });
+      
+      
+       if(matchingItem){
+        matchingItem.quantity+=1;
+      }else{
+       
+        cart.push({
+          productName:productName,
+          quantity:1
+        });
 
-
+      }
+      console.log(cart)
+ 
     })
 
-
   })
+
+ 
