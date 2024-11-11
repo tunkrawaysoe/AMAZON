@@ -95,7 +95,7 @@ const products = [
           </div>
 
           <div class="product-quantity-container">
-            <select class ="js-selection" id="${productItem.id}">
+            <select class ="js-quantity-selector-${productItem.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -133,58 +133,30 @@ const products = [
   document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     
     button.addEventListener('click',()=>{
-            
-      document.querySelector('.js-products-grid').innerHTML = productHtml;
-
-      document.querySelectorAll('.js-add-to-cart').forEach((button) => {
       
-          button.addEventListener('click', () => {
-              
-              let selectElements = document.querySelectorAll('.js-selection');
-              
-              // Process each select element one by one
-              selectElements.forEach((selectElement, index) => {
-                  
-                  // Delay the processing to handle each value one by one
-                  setTimeout(() => {
-                      let selectedValue = selectElement.options[selectElement.selectedIndex].value;
-                      let selectedText = selectElement.options[selectElement.selectedIndex].text;
-      
-                      console.log("Select Element Index: " + index);
-                      console.log("Selected Value: " + selectedValue);
-                      console.log("Selected Text: " + selectedText);
-                  }, index * 500); // 500ms delay between each element, adjust as needed
-              });
-          });
-      });
-      
-    
-      
-      const productId = button.dataset.productId;
-      
-      const productName=button.dataset.productName;
+     const productId = button.dataset.productId;
+     console.log(productId)
+     let selectVale=Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+     console.log(selectVale);  
+     const productName=button.dataset.productName;
         
+            let matchingItem;
+                cart.forEach((item)=>{
+                if(productName===item.productName){
+                    
+                    matchingItem=item;
 
-      
-      
-      let matchingItem;
-      cart.forEach((item)=>{
-      if(productName===item.productName){
-          
-          matchingItem=item;
-
-        }
-       });
-      
-      
-       if(matchingItem){
-        matchingItem.quantity+=1;
-      }else{
-       
-        cart.push({
-          productName:productName,
-          quantity:1
-        });
+                  }
+                });
+                
+                
+                if(matchingItem){
+                  matchingItem.quantity+=1;
+                }else{
+                cart.push({
+                    productName:productName,
+                    quantity:selectVale
+                  });
 
       }
       console.log(cart)
