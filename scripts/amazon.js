@@ -151,7 +151,7 @@ const products = [
                 
                 
                 if(matchingItem){
-                  matchingItem.quantity+=1;
+                  matchingItem.quantity+=selectVale||1;
                 }else{
                 cart.push({
                     productName:productName,
@@ -159,7 +159,12 @@ const products = [
                   });
 
       }
-      console.log(cart)
+      let quantity=0;
+      cart.forEach((item)=>{
+        quantity+=item.quantity;
+
+      });
+      document.querySelector('.js-cart-quantity').innerHTML=quantity;
  
     })
 
