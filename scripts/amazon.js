@@ -1,68 +1,5 @@
-const products = [
-
-    
-   
-    {
-      id: "d339adf3-e004-4c20-a120-40e8874c66cb",
-      image: "images/products/double-elongated-twist-french-wire-earrings.webp",
-      name: "Double Oval Twist French Wire Earrings - Gold",
-      rating: {
-        stars: 4.5,
-        count: 117
-      },
-      priceCents: 2400,
-      keywords: [
-        "accessories",
-        "womens"
-      ]
-    },
-    {
-      id: "d37a651a-d501-483b-aae6-a9659b0757a0",
-      image: "images/products/round-airtight-food-storage-containers.jpg",
-      name: "Round Airtight Food Storage Containers - 5 Piece",
-      rating: {
-        stars: 4,
-        count: 126
-      },
-      priceCents: 2899,
-      keywords: [
-        "boxes",
-        "food containers",
-        "kitchen"
-      ]
-    },
-    {
-      id: "0d7f9afa-2efe-4fd9-b0fd-ba5663e0a524",
-      image: "images/products/coffeemaker-with-glass-carafe-black.jpg",
-      name: "Coffeemaker with Glass Carafe and Reusable Filter - 25 Oz, Black",
-      rating: {
-        stars: 4.5,
-        count: 1211
-      },
-      priceCents: 2250,
-      keywords: [
-        "coffeemakers",
-        "kitchen",
-        "appliances"
-      ]
-    },
-    {
-      id: "02e3a47e-dd68-467e-9f71-8bf6f723fdae",
-      image: "images/products/blackout-curtains-black.jpg",
-      name: "Blackout Curtains Set 42 x 84-Inch - Black, 2 Panels",
-      rating: {
-        stars: 4.5,
-        count: 363
-      },
-      priceCents: 3099,
-      keywords: [
-        "bedroom",
-        "home"
-      ]
-    },
-  
-    
-  ];
+import {cart,addToCart} from '../data/cart.js';
+import {products} from '../data/products.js';
   let productHtml='';
 
   products.forEach((productItem)=> {
@@ -128,8 +65,20 @@ const products = [
 
 
 
-  document.querySelector('.js-products-grid').innerHTML=productHtml;
+ document.querySelector('.js-products-grid').innerHTML=productHtml;
  
+
+ function upDateCart(){
+  let quantity=0;
+  cart.forEach((item)=>{
+    quantity+=item.quantity;
+  });
+
+
+  document.querySelector('.js-cart-quantity').innerHTML=quantity;
+  
+ }
+
   document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     
     button.addEventListener('click',()=>{
@@ -140,31 +89,10 @@ const products = [
      console.log(selectVale);  
      const productName=button.dataset.productName;
         
-            let matchingItem;
-                cart.forEach((item)=>{
-                if(productName===item.productName){
-                    
-                    matchingItem=item;
-
-                  }
-                });
-                
-                
-                if(matchingItem){
-                  matchingItem.quantity+=selectVale||1;
-                }else{
-                cart.push({
-                    productName:productName,
-                    quantity:selectVale
-                  });
-
-      }
-      let quantity=0;
-      cart.forEach((item)=>{
-        quantity+=item.quantity;
-
-      });
-      document.querySelector('.js-cart-quantity').innerHTML=quantity;
+     addToCart(productId,selectVale)  
+      console.log(cart)
+     upDateCart()
+    
  
     })
 
