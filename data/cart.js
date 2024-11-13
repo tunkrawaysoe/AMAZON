@@ -34,12 +34,10 @@ export function addToCart(productId,selectValue){
    export function removeFromCart(productId){
     const newCart=[];
     cart.forEach((cartItem)=>{
-      if(!productId===cartItem.productId){
+      if(productId!==cartItem.productId){
         newCart.push(cartItem)
       }
     });
-    newCart=cart;
-
-
+    cart=newCart;
 
    }
