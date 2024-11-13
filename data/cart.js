@@ -51,3 +51,11 @@ export function addToCart(productId,selectValue){
     cart=newCart;
 
    }
+   export function calculateCartQuantity(){
+    let quantity=0;
+    cart.forEach((item)=>{
+    quantity+=item.quantity;
+   });
+   return quantity;
+
+   }

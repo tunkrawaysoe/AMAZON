@@ -1,4 +1,4 @@
-import {cart,addToCart,saveToLocalStorage} from '../data/cart.js';
+import {cart,addToCart,saveToLocalStorage,calculateCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './ulti/money.js'; 
 let productHtml='';
@@ -69,7 +69,7 @@ let productHtml='';
  document.querySelector('.js-products-grid').innerHTML=productHtml;
  
 
- function upDateCart(className){
+ /*function upDateCart(className){
   let quantity=0;
   cart.forEach((item)=>{
     quantity+=item.quantity;
@@ -78,7 +78,7 @@ let productHtml='';
 
   document.querySelector('.js-cart-quantity').innerHTML=quantity;
   
- }
+ }*/
 
   document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     
@@ -89,10 +89,12 @@ let productHtml='';
      let selectVale=Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
      console.log(selectVale);  
      const productName=button.dataset.productName;
-        
-     addToCart(productId,selectVale); 
-     saveToLocalStorage();
-     upDateCart();
+     saveToLocalStorage();  
+     addToCart(productId,selectVale);
+     const quantity=calculateCartQuantity();
+     document.querySelector('.js-cart-quantity').innerHTML=quantity
+ 
+
     
  
     })
