@@ -1,4 +1,4 @@
-import {cart,addToCart} from '../data/cart.js';
+import {cart,addToCart,saveToLocalStorage} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './ulti/money.js'; 
 let productHtml='';
@@ -90,9 +90,9 @@ let productHtml='';
      console.log(selectVale);  
      const productName=button.dataset.productName;
         
-     addToCart(productId,selectVale)  
-      console.log(cart)
-     upDateCart()
+     addToCart(productId,selectVale); 
+     saveToLocalStorage();
+     upDateCart();
     
  
     })
