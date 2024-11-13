@@ -92,6 +92,18 @@ cart.forEach((cartItem)=>{
   </div>`
 
 });
+/*function upDateCart(className){
+  let quantity=0;
+  cart.forEach((item)=>{
+   quantity+=item.quantity;
+  });
+
+
+  document.querySelector('.return-to-home-link').innerHTML=`${quantity} items `;
+  
+ }
+  */
+ //upDateCart()
 
 document.querySelector('.js-order-summary').innerHTML = checkOutHtml;
 document.querySelectorAll('.js-delete-quantity').forEach((deleteElement)=>{
@@ -99,10 +111,15 @@ document.querySelectorAll('.js-delete-quantity').forEach((deleteElement)=>{
    const productId= deleteElement.dataset.productId
    console.log(productId);
    removeFromCart(productId);
-   //upDateCart()
-   saveToLocalStorage();
-   const quantity=calculateCartQuantity()
+   const quantity=calculateCartQuantity();
    document.querySelector('.return-to-home-link').innerHTML=`${quantity} items `;
+
+   saveToLocalStorage();
+
+   
+
+
+
    const container=document.querySelector(`.cart-item-container-${productId}`);
    container.remove();
 
