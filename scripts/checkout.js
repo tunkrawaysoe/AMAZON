@@ -1,7 +1,8 @@
 import { cart,removeFromCart,saveToLocalStorage,calculateCartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./ulti/money.js";
-
+const quantity=calculateCartQuantity();
+document.querySelector('.js-return-to-home-link').innerHTML=`${quantity} items `;
 let checkOutHtml;
 cart.forEach((cartItem)=>{
     const productId = cartItem.productId;
@@ -35,9 +36,11 @@ cart.forEach((cartItem)=>{
           <span>
             Quantity: <span class="quantity-label">${cartItem.quantity}</span>
           </span>
-          <span class="update-quantity-link link-primary">
-            Update
+          <span class="update-quantity-link link-primary js-update-quantity" data-product-id="${matchingProduct.id}">
+            Update 
           </span>
+          <input class="quantity-input">
+          <span class="save-quantity-link">Save</span>
           <span class="delete-quantity-link link-primary js-delete-quantity" data-product-id="${matchingProduct.id}">
             Delete
           </span>
@@ -112,7 +115,7 @@ document.querySelectorAll('.js-delete-quantity').forEach((deleteElement)=>{
    console.log(productId);
    removeFromCart(productId);
    const quantity=calculateCartQuantity();
-   document.querySelector('.return-to-home-link').innerHTML=`${quantity} items `;
+   document.querySelector('.js-return-to-home-link').innerHTML=`${quantity} items `;
 
    saveToLocalStorage();
 
@@ -126,5 +129,15 @@ document.querySelectorAll('.js-delete-quantity').forEach((deleteElement)=>{
   })
 })
 
+document.querySelectorAll('.js-update-quantity').forEach((updateLink)=>{
+   updateLink.addEventListener('click',()=>{
+    
+    const productId =updateLink.dataset.productId;
+    updateLink.classList.add("what")
+    
+
+
+   })
+})
    
 

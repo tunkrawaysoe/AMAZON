@@ -209,3 +209,11 @@
   margin-top: 11px;
   margin-bottom: 15px;
 }
+.quantity-input ,.save-quantity-link{
+ width: 30px;
+ display: none;
+ 
+}
+.quantity-input :hover{
+  display: block;
+}

@@ -1,6 +1,8 @@
 import {cart,addToCart,saveToLocalStorage,calculateCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './ulti/money.js'; 
+const quantity=calculateCartQuantity();
+document.querySelector('.js-cart-quantity').innerHTML=quantity;
 let productHtml='';
 
   products.forEach((productItem)=> {
