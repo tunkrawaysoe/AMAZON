@@ -1,14 +1,13 @@
-import { cart,removeFromCart,saveToLocalStorage,calculateCartQuantity } from "../data/cart.js";
+import { cart,removeFromCart,saveToLocalStorage,calculateCartQuantity,updateDeliveryOption } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./ulti/money.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 import {deliveryOptions } from '../data/deliveryOptions.js'
 const today =dayjs();
-console.log(cart)
 
-console.log(today)
 const quantity=calculateCartQuantity();
 document.querySelector('.js-return-to-home-link').innerHTML=`${quantity} items `;
+function renderCheckoutPage(){
 let checkOutHtml;
 cart.forEach((cartItem)=>{
     const productId = cartItem.productId;
@@ -30,7 +29,7 @@ cart.forEach((cartItem)=>{
       
 
     });
-    console.log(deliveryOption)
+   
     const today=dayjs();
     const deliveryDate= today.add(deliveryOption.deliveryDays,'days');
     const dateString= deliveryDate.format('dddd, MMMM D');
@@ -95,7 +94,7 @@ function deliveryOptionsHtml(matchingProduct,cartItem){
 
 
      const isChecked=deliveryOption.id===cartItem.deliveryOptionsId;
-    deliveryHtml+=` <div class="delivery-option">
+    deliveryHtml+=` <div class="delivery-option js-delivery-option" data-product-id='${matchingProduct.id}' data-delivery-option-id='${deliveryOption.id}'>
           <input type="radio"
             class="delivery-option-input"
             ${isChecked ? 'checked' : '' }
@@ -146,6 +145,17 @@ document.querySelectorAll('.js-update-quantity').forEach((updateLink)=>{
 
 
    })
+});
+
+document.querySelectorAll('.js-delivery-option').forEach((element)=>{
+  element.addEventListener('click',()=>{
+    const {productId,deliveryOptionId}=element.dataset;
+    updateDeliveryOption(productId,deliveryOptionId)
+    saveToLocalStorage();
+    renderCheckoutPage();
+    
+  })
 })
    
-
+}
+renderCheckoutPage();
