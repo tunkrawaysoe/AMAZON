@@ -91,10 +91,11 @@ console.log(cart);
      let selectVale=Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
      console.log(selectVale);  
      const productName=button.dataset.productName;
-      const quantity=calculateCartQuantity();
-      document.querySelector('.js-cart-quantity').innerHTML=quantity;
+     
   
-     addToCart(productId,selectVale); 
+     addToCart(productId,selectVale);
+     const quantity=calculateCartQuantity();
+     document.querySelector('.js-cart-quantity').innerHTML=quantity; 
      saveToLocalStorage();
     
     
