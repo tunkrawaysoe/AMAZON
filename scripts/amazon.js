@@ -19,19 +19,14 @@ let productHtml='';
           
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${productItem.rating.stars * 10}.png">
+              src="${productItem.getImageUrl()}">
             <div class="product-rating-count link-primary">
               ${productItem.rating.count}
             </div>
           </div>
 
-
-
-
-         
-
-          <div class="product-price">
-            $${formatCurrency(productItem.priceCents)}
+         <div class="product-price">
+          ${productItem.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -66,7 +61,7 @@ let productHtml='';
 
   });
 
-console.log(cart);
+
 
  document.querySelector('.js-products-grid').innerHTML=productHtml;
  
@@ -87,9 +82,8 @@ console.log(cart);
     button.addEventListener('click',()=>{
       
      const productId = button.dataset.productId;
-     console.log(productId)
+ 
      let selectVale=Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
-     console.log(selectVale);  
      const productName=button.dataset.productName;
      
   
@@ -97,10 +91,7 @@ console.log(cart);
      const quantity=calculateCartQuantity();
      document.querySelector('.js-cart-quantity').innerHTML=quantity; 
      saveToLocalStorage();
-    
-    
-    
- 
+
     })
 
   })

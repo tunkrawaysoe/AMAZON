@@ -2,6 +2,7 @@ import { cart,removeFromCart,saveToLocalStorage,calculateCartQuantity,updateDeli
 import { products,getProduct } from "../../data/products.js";
 import { formatCurrency } from "../ulti/money.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
+import { renderPaymentSummary } from "./paymentSummary.js";
 import {deliveryOptions ,getDeliveyOption} from "../../data/deliveryOptions.js"
 const today =dayjs();
 
@@ -39,7 +40,7 @@ cart.forEach((cartItem)=>{
         ${matchingProduct.name}
         </div>
         <div class="product-price">
-        ${formatCurrency(matchingProduct.priceCents)}
+        ${matchingProduct.getPrice()}
         </div>
         <div class="product-quantity">
           <span>
@@ -106,8 +107,9 @@ document.querySelector('.js-order-summary').innerHTML = checkOutHtml;
 document.querySelectorAll('.js-delete-quantity').forEach((deleteElement)=>{
   deleteElement.addEventListener('click',()=>{
    const productId= deleteElement.dataset.productId
-   console.log(productId);
+
    removeFromCart(productId);
+   renderPaymentSummary();
    const quantity=calculateCartQuantity();
    document.querySelector('.js-return-to-home-link').innerHTML=`${quantity} items `;
 
@@ -139,7 +141,10 @@ document.querySelectorAll('.js-delivery-option').forEach((element)=>{
     const {productId,deliveryOptionId}=element.dataset;
     updateDeliveryOption(productId,deliveryOptionId)
     saveToLocalStorage();
+    renderPaymentSummary();
     renderCheckoutPage();
+   
+    
     
   })
 })
