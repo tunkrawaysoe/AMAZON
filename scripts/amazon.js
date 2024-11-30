@@ -44,6 +44,8 @@ let productHtml='';
             </select>
           </div>
 
+          ${productItem.extraInfoHtml()}
+
           <div class="product-spacer"></div>
 
           <div class="added-to-cart">
